@@ -1,0 +1,16 @@
+{
+  "name": "indexlistview",
+  "version": "1.0.0",
+  "description": "indexlistview是一款OpenHarmony环境下的带索引的城市选择组件",
+  "main": "Index.ets",
+  "author": "liyixin",
+  "keywords": [
+    '城市选择',
+    'IndexListView',
+    'IndexList',
+    'IndexableList',
+    '字母索引'
+  ],
+  "license": "Apache-2.0",
+  "dependencies": {}
+}
