@@ -1,4 +1,4 @@
-# FilterBar
+# indexlistview
 
 ## 简介
 
@@ -9,8 +9,15 @@
 ![输入图片说明](城市选择.gif)
 
 ## 安装
-
+### 方式1
 > ohpm install indexlistview
+
+### 方式2
+```
+"dependencies": {
+    "indexlistview": "^1.0.0"
+  }
+```
 
 ## 版本和设备
 
