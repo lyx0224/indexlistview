@@ -11,6 +11,8 @@
     'IndexableList',
     '字母索引'
   ],
+  "repository": 'https://gitee.com/ethan-coder/index-city-list-view',
+  "homepage": 'https://gitee.com/ethan-coder',
   "license": "Apache-2.0",
   "dependencies": {}
 }
