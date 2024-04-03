@@ -2,7 +2,7 @@
 
 ## 简介
 
-> FilterBar是一款OpenHarmony环境下带索引的城市选择组件。
+> indexlistview是一款OpenHarmony环境下带索引的城市选择组件。
 
 ## 效果展示
 
