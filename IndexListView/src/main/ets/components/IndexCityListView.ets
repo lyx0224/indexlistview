@@ -3,6 +3,7 @@ import { CityType, CITY_DATA } from './DetailData'
 
 @Component
 export struct IndexCityListView {
+  clickCallback?: (city: string) => void
   private mScroller: Scroller = new Scroller()
   @State y: number = 0
   @State currentLetter: string = ''
@@ -42,6 +43,9 @@ export struct IndexCityListView {
                     .fontSize('14fp')
                     .width('100%')
                     .onClick(() => {
+                      if (this.clickCallback) {
+                        this.clickCallback(item)
+                      }
                     })
                 })
               }

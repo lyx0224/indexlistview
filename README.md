@@ -6,18 +6,11 @@
 
 ## 效果展示
 
-![输入图片说明](城市选择.gif)
+![输入图片说明](indexlistview.gif)
 
 ## 安装
-### 方式1
-> ohpm install indexlistview
 
-### 方式2
-```
-"dependencies": {
-    "indexlistview": "^1.0.0"
-  }
-```
+> ohpm install indexlistview
 
 ## 版本和设备
 
@@ -27,22 +20,32 @@
 | SDK           | **10**             |
 | 设备            | Emulator(Next) |
 
+## 属性说明
+
+| 属性                  | 类型               | 含义     | 必传  | 备注    |
+|---------------------|------------------|--------|-----|-------|
+| clickCallback            | (string) => void | 回调函数   | Y   | 回调给下游 |
+
 ## 使用说明
 
 ```typescript
 import { IndexCityListView } from 'index-listview/Index'
+import promptAction from '@ohos.promptAction';
 @Entry
 @Component
 struct Index {
   build() {
     Column() {
-      IndexCityListView()
+      IndexCityListView({
+        clickCallback: (city: string) => {
+          promptAction.showToast({ message: city })
+        }
+      })
     }
 .width('100%')
   .height('100%')
 }
 }
-
 ```
 
 ## 贡献代码
