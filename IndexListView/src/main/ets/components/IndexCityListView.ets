@@ -23,101 +23,113 @@ export struct IndexCityListView {
 
   build() {
     Stack({ alignContent: Alignment.End }) {
-      // 城市列表
-      Column() {
-        List({ space: 14, initialIndex: 0, scroller: this.mScroller }) {
-          ForEach(CITY_DATA, (index: CityType) => {
-            ListItem() {
-              Column() {
-                //字母
-                Text(`${index.name}`)
+      this.cityList()
+      this.indexList()
+      this.centerView()
+    }
+  }
+
+  @Builder
+  cityList() {
+    // 城市列表
+    Column() {
+      List({ space: 14, initialIndex: 0, scroller: this.mScroller }) {
+        ForEach(CITY_DATA, (index: CityType) => {
+          ListItem() {
+            Column() {
+              //字母
+              Text(`${index.name}`)
+                .height('30vp')
+                .fontSize('16fp')
+                .fontColor($r('app.color.text_font_color'))
+                .width('100%')
+                .backgroundColor($r('app.color.lineColor'))
+              //字母城市
+              ForEach(index.city, (item: string) => {
+                Text(item)
                   .height('30vp')
-                  .fontSize('16fp')
-                  .fontColor($r('app.color.text_font_color'))
+                  .fontSize('14fp')
                   .width('100%')
-                  .backgroundColor($r('app.color.lineColor'))
-                //字母城市
-                ForEach(index.city, (item: string) => {
-                  Text(item)
-                    .height('30vp')
-                    .fontSize('14fp')
-                    .width('100%')
-                    .onClick(() => {
-                      if (this.clickCallback) {
-                        this.clickCallback(item)
-                      }
-                    })
-                })
+                  .onClick(() => {
+                    if (this.clickCallback) {
+                      this.clickCallback(item)
+                    }
+                  })
+              })
+            }
+          }
+        })
+      }
+      .edgeEffect(EdgeEffect.None)
+      .divider({
+        strokeWidth: 2, color: $r('app.color.divider_color'),
+        startMargin: 0, endMargin: 20
+      })
+      .onScrollIndex((firstIndex: number, lastIndex: number) => {
+        this.scrollIndex = firstIndex
+      })
+
+    }
+    .width('100%')
+    .height('100%')
+    .backgroundColor(Color.White)
+  }
+
+  @Builder
+  indexList() {
+    //right
+    Column() {
+      ForEach(CITY_DATA, (item: CityType, index: number) => {
+        Text(item.name)
+          .textAlign(TextAlign.Center)
+          .height(this.letterHeight)
+          .width('100%')
+          .fontColor($r('app.color.primaryColor'))
+          .onTouch((event) => {
+            if (event.type == TouchType.Move) {
+              this.y = event.touches[0].windowY
+              let findIndex = this.findMovePositionLetterIndex(this.y)
+              if (findIndex != -1) {
+                this.currentLetter = CITY_DATA[findIndex].name
+                this.mScroller.scrollToIndex(findIndex)
               }
+            } else if (event.type == TouchType.Down) {
+              this.pressDown = true
+            } else if (event.type == TouchType.Up) {
+              this.pressDown = false
             }
           })
-        }
-        .edgeEffect(EdgeEffect.None)
-        .divider({
-          strokeWidth: 2, color: $r('app.color.divider_color'),
-          startMargin: 0, endMargin: 20
-        })
-        .onScrollIndex((firstIndex: number, lastIndex: number) => {
-          this.scrollIndex = firstIndex
-        })
 
-      }
-      .width('100%')
-      .height('100%')
-      .backgroundColor(Color.White)
-
-      //right
-      Column() {
-        ForEach(CITY_DATA, (item: CityType, index: number) => {
-          Text(item.name)
-            .textAlign(TextAlign.Center)
-            .height(this.letterHeight)
-            .width('100%')
-            .fontColor($r('app.color.primaryColor'))
-            .onTouch((event) => {
-              if (event.type == TouchType.Move) {
-                this.y = event.touches[0].windowY
-                let findIndex = this.findMovePositionLetterIndex(this.y)
-                if (findIndex != -1) {
-                  this.currentLetter = CITY_DATA[findIndex].name
-                  this.mScroller.scrollToIndex(findIndex)
-                }
-              } else if (event.type == TouchType.Down) {
-                this.pressDown = true
-              } else if (event.type == TouchType.Up) {
-                this.pressDown = false
-              }
-            })
-
-        })
-      }.width('30vp')
-      .border({
-        radius: 10
       })
-      .margin({ right: 4 })
-      .backgroundColor(this.pressDown ? $r('app.color.lineColor') : Color.Transparent)
+    }.width('30vp')
+    .border({
+      radius: 10
+    })
+    .margin({ right: 4 })
+    .backgroundColor(this.pressDown ? $r('app.color.lineColor') : Color.Transparent)
+  }
 
-      //悬停
-      if (this.scrollIndex >= 0 && this.scrollIndex <= CITY_DATA.length - 1) {
+  @Builder
+  centerView() {
+    if (this.scrollIndex >= 0 && this.scrollIndex <= CITY_DATA.length - 1) {
+      Column() {
         Column() {
-          Column() {
-            Text(`${CITY_DATA[this.scrollIndex].name}`)
-              .fontColor($r('app.color.primaryColor'))
-              .fontSize('30fp')
-              .fontWeight(FontWeight.Bold)
-          }.width('100vp')
-          .height('100vp')
-          .justifyContent(FlexAlign.Center)
-          .border({
-            width: '1vp',
-            color: $r('app.color.primaryColor'),
-            radius: 4
-          })
-        }
+          Text(`${CITY_DATA[this.scrollIndex].name}`)
+            .fontColor($r('app.color.primaryColor'))
+            .fontSize('30fp')
+            .fontWeight(FontWeight.Bold)
+        }.width('100vp')
+        .height('100vp')
         .justifyContent(FlexAlign.Center)
-        .width('100%')
-        .visibility(this.pressDown ? Visibility.Visible : Visibility.Hidden)
+        .border({
+          width: '1vp',
+          color: $r('app.color.primaryColor'),
+          radius: 4
+        })
       }
+      .justifyContent(FlexAlign.Center)
+      .width('100%')
+      .visibility(this.pressDown ? Visibility.Visible : Visibility.Hidden)
     }
   }
 
